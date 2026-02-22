@@ -3,6 +3,11 @@
     "name": "progettospese",
     "slug": "progettospese",
     "version": "1.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "12c7541f-c6bf-4525-a7b3-b6eb622fc604"
+      }
+    },
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "progettospese",
