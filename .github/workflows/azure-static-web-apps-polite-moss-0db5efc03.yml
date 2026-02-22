@@ -38,9 +38,6 @@ jobs:
           # 2. Copiamo il contenuto di dist nella root
           cp -r dist/* .
 
-          # 3. Rimuoviamo la cartella dist originale per non duplicare i dati
-          rm -rf dist
-
           # 4. Verifichiamo che l'index sia nella root
           ls index.html
 
