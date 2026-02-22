@@ -6,10 +6,10 @@
     "owner": "Mard3s",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mard3s.progettospese"
+      "bundleIdentifier": "com.Mard3s.progettospese"
     },
     "android": {
-      "package": "com.mard3s.progettospese",
+      "package": "com.Mard3s.progettospese",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png"
