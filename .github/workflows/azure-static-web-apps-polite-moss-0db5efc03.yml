@@ -31,9 +31,17 @@ jobs:
         run: |
           npm install
           npx expo export --platform web
-          # COPIAMO TUTTO DALLA CARTELLA DIST ALLA ROOT
-          cp -r dist/* . 
-          # Verifichiamo che l'index sia ora nella root
+
+          # 1. Rimuoviamo node_modules per liberare spazio (non servono per il deploy statico)
+          rm -rf node_modules
+
+          # 2. Copiamo il contenuto di dist nella root
+          cp -r dist/* .
+
+          # 3. Rimuoviamo la cartella dist originale per non duplicare i dati
+          rm -rf dist
+
+          # 4. Verifichiamo che l'index sia nella root
           ls index.html
 
       - name: Verify dist folder
