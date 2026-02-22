@@ -87,7 +87,9 @@ jobs:
         run: npm install
 
       - name: Build APK
-        run: eas build --platform android --profile preview --non-interactive
+        run: eas build --platform android --profile preview --non-interactive --auto-trust-credentials
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
