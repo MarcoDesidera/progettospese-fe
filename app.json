@@ -3,13 +3,13 @@
     "name": "progettospese",
     "slug": "progettospese",
     "version": "1.0.0",
-    "owner": "Mard3s",
+    "owner": "mard3s",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.Mard3s.progettospese"
+      "bundleIdentifier": "com.mard3s.progettospese"
     },
     "android": {
-      "package": "com.Mard3s.progettospese",
+      "package": "com.mard3s.progettospese",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png"
