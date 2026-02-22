@@ -5,5 +5,15 @@
   },
   "mimeTypes": {
     ".webmanifest": "application/manifest+json"
-  }
+  },
+  "routes": [
+    {
+      "route": "*",
+      "condition": {
+        "hostName": "progettospese.it"
+      },
+      "redirect": "https://www.progettospese.it",
+      "statusCode": 301
+    }
+  ]
 }

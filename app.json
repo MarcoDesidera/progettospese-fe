@@ -4,17 +4,6 @@
     "slug": "progettospese",
     "version": "1.0.0",
     "owner": "mard3s",
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.mard3s.progettospese"
-    },
-    "android": {
-      "package": "com.mard3s.progettospese",
-      "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png"
-      }
-    },
     "extra": {
       "eas": {
         "projectId": "12c7541f-c6bf-4525-a7b3-b6eb622fc604"
@@ -26,9 +15,11 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mard3s.progettospese"
     },
     "android": {
+      "package": "com.mard3s.progettospese",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
