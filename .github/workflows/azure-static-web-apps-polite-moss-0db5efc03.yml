@@ -28,7 +28,13 @@ jobs:
         run: npm install
 
       - name: Build Expo Web
-        run: npx expo export --platform web
+        run: |
+          npm install
+          npx expo export --platform web
+          # COPIAMO TUTTO DALLA CARTELLA DIST ALLA ROOT
+          cp -r dist/* . 
+          # Verifichiamo che l'index sia ora nella root
+          ls index.html
 
       - name: Verify dist folder
         run: |
