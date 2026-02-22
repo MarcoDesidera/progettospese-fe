@@ -6,7 +6,7 @@
     "owner": "Mard3s",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.tuonome.progettospese"
+      "bundleIdentifier": "com.mard3s.progettospese"
     },
     "android": {
       "package": "com.mard3s.progettospese",
