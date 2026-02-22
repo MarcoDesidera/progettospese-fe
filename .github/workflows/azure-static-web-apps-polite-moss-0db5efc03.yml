@@ -30,6 +30,13 @@ jobs:
       - name: Build Expo Web
         run: npx expo export --platform web
 
+      - name: Verify dist folder
+        run: |
+          echo "Verifica presenza index.html in dist:"
+          find dist -name "index.html"
+          echo "Percorso corrente:"
+          pwd
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
