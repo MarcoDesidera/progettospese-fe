@@ -1,15 +1,54 @@
-import { Text, View } from "react-native";
+import ContiCorrenteTable from "@/components/ContiCorrenteTable";
+import { authStorage } from "@/utils/authStorage";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Button, StyleSheet, View } from "react-native";
 
 export default function Index() {
+  const router = useRouter();
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  // useEffect(() => {
+  //   // Controlla se esiste un token salvato
+  //   const savedToken = sessionStorage.getItem('access_token');
+  //   if (savedToken) {
+  //     setAccessToken(savedToken);
+  //   }
+  // }, []); // Esegue all'avvio
+
+  useEffect(() => {
+    const loadToken = async () => {
+      const token = await authStorage.getToken();
+      setAccessToken(token);
+      //setIsChecking(false);
+    };
+    loadToken();
+  }, []);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('access_token');
+    setAccessToken(null);
+  };
+  
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      {!accessToken ? (
+        <Button 
+            title="Vai al Login" 
+            onPress={() => router.push("/login")} 
+        />
+      ) : (
+        <View style={{ width: '100%' }}>
+           <Button title="Logout" onPress={handleLogout} color="red" />
+           <ContiCorrenteTable token={accessToken} />
+        </View>
+      )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    width: 10 // React Native assume che siano unità dp
+  },
+});
