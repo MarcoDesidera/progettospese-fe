@@ -3,9 +3,6 @@ import { Slot, useRootNavigationState, useRouter, useSegments } from "expo-route
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 
-import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
-import '@/global.css';
-
 export default function RootLayout() {
 
   const router = useRouter();
@@ -31,12 +28,14 @@ export default function RootLayout() {
   useEffect(() => {
     // Se stiamo ancora caricando il token o la navigazione non è pronta, aspetta
     if (isChecking || !navigationState?.key) return;
-
+    (segments);
     const inAppGroup = segments[0] === '(app)';
-
+    (accessToken);
     if (!accessToken && inAppGroup) {
+      ("login");
       router.replace("/(auth)/login");
     } else if (accessToken && !inAppGroup) {
+      ("app")
       router.replace("/(app)");
     }
   }, [accessToken, segments, navigationState?.key, isChecking]);
@@ -50,10 +49,6 @@ export default function RootLayout() {
     );
   }
 
-  return
-    <GluestackUIProvider mode="dark">
-      <Slot />
-    </GluestackUIProvider>
-    ;
+  return <Slot />
 
 }

@@ -16,6 +16,7 @@ export default function ContiCorrenteTable({ token }: { token: string | null }) 
   const [error, setError] = useState("");
 
   useEffect(() => {
+    (token);
     if (token) {
       getAllContiCorrente(token)
         .then(data => {

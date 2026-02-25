@@ -62,8 +62,6 @@ export default function LoginScreen() {
         const data = await res.json();
 
         if (data.access_token) {
-          console.log("✅ ACCESS TOKEN RICEVUTO:", data.access_token);
-          
           // Salvataggio per il frontend
           //sessionStorage.setItem('access_token', data.access_token);
           await authStorage.saveToken(data.access_token);
