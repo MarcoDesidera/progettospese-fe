@@ -2,19 +2,11 @@ import ContiCorrenteTable from "@/components/ContiCorrenteTable";
 import { authStorage } from "@/utils/authStorage";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-export default function Index() {
+export default function Index({ token }: { token: string }) {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //   // Controlla se esiste un token salvato
-  //   const savedToken = sessionStorage.getItem('access_token');
-  //   if (savedToken) {
-  //     setAccessToken(savedToken);
-  //   }
-  // }, []); // Esegue all'avvio
 
   useEffect(() => {
     const loadToken = async () => {
@@ -31,18 +23,11 @@ export default function Index() {
   };
   
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      {!accessToken ? (
-        <Button 
-            title="Vai al Login" 
-            onPress={() => router.push("/login")} 
-        />
-      ) : (
-        <View style={{ width: '100%' }}>
-           <Button title="Logout" onPress={handleLogout} color="red" />
+    <View style={{ flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
+      <View style={{ width: '100%' }}>
+           {/* <Button title="Logout" onPress={handleLogout} color="red" /> */}
            <ContiCorrenteTable token={accessToken} />
         </View>
-      )}
     </View>
   );
 }

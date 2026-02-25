@@ -69,7 +69,7 @@ export default function LoginScreen() {
           await authStorage.saveToken(data.access_token);
           
           // Torna alla home (Index)
-          router.replace("/");
+          router.replace("/(app)");
         } else {
           console.error("Errore nello scambio del token:", data);
         }
