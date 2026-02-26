@@ -41,6 +41,11 @@ jobs:
           # 4. Verifichiamo che l'index sia nella root
           ls index.html
 
+        env:
+          EXPO_PUBLIC_API_URL: ${{secrets.EXPO_PUBLIC_API_URL}}
+          EXPO_PUBLIC_AZURE_TENANT_ID: ${{ secrets.EXPO_PUBLIC_AZURE_TENANT_ID }}
+          EXPO_PUBLIC_AZURE_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_AZURE_CLIENT_ID }}
+
       - name: Verify dist folder
         run: |
           echo "Verifica presenza index.html in dist:"
@@ -60,10 +65,6 @@ jobs:
           output_location: "dist"
           skip_app_build: true
           app_artifact_location: "dist"
-        env:
-          EXPO_PUBLIC_API_URL: ${{secrets.EXPO_PUBLIC_API_URL}}
-          EXPO_PUBLIC_AZURE_TENANT_ID: ${{ secrets.EXPO_PUBLIC_AZURE_TENANT_ID }}
-          EXPO_PUBLIC_AZURE_CLIENT_ID: ${{ secrets.EXPO_PUBLIC_AZURE_CLIENT_ID }}
           ###### End of Repository/Build Configurations ######
 
   build_mobile_apk:
