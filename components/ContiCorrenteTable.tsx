@@ -1,6 +1,7 @@
+import { TransazioniDto } from '@/types/transaction.dto';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { Card, Text } from 'react-native-paper';
+import { Card, List, Text } from 'react-native-paper';
 import { getAllContiCorrente } from '../api/ContiCorrenteService';
 
 interface ContiCorrente {
@@ -8,6 +9,7 @@ interface ContiCorrente {
   nome: string;
   descrizione: string;
   totale: number;
+  transazioni: TransazioniDto[];
 }
 
 export default function ContiCorrenteTable({ token }: { token: string | null }) {
@@ -40,6 +42,12 @@ export default function ContiCorrenteTable({ token }: { token: string | null }) 
           <Card.Title title={conto.nome}/>
           <Card.Content>
             <Text>{conto.totale} €</Text>
+            <List.Section>
+              <List.Subheader>transazioni</List.Subheader>
+              {conto.transazioni.map((t) => (
+                <List.Item title={t.nome}  /> //left={() => <List.Icon icon="folder" />}
+              ))}
+            </List.Section>
           </Card.Content>
         </Card>
       ))}
