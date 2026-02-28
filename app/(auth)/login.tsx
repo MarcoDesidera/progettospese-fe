@@ -20,7 +20,7 @@ export default function LoginScreen() {
   // 2. Definizione del Redirect URI
   const redirectUri = makeRedirectUri({
     scheme: 'progettospese', // Assicurati che coincida con app.json
-    preferLocalhost: true,
+    preferLocalhost: false,
   });
 
   // 3. Configurazione della richiesta di autenticazione

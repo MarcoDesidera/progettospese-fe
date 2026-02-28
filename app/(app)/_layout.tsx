@@ -1,7 +1,10 @@
+import DrawerMenu from "@/components/DrawerMenu";
+import Settings from "@/components/SettingsComponent";
 import { authStorage } from "@/utils/authStorage";
-import { Slot, useRootNavigationState, useRouter, useSegments } from "expo-router";
+import { useRootNavigationState, useRouter, useSegments } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
+import Index from ".";
 
 export default function RootLayout() {
 
@@ -49,6 +52,9 @@ export default function RootLayout() {
     );
   }
 
-  return <Slot />
-
+  // return <Slot />
+  return <DrawerMenu 
+            ContiCorrenteScreen={() => <Index token={accessToken} />} 
+            SettingsScreen={() => <Settings token={accessToken} />}
+          />
 }
