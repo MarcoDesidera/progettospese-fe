@@ -1,10 +1,10 @@
-import ContiCorrenteTable from "@/components/ContiCorrenteTable";
+import SettingsComponent from "@/components/SettingsComponent";
 import { authStorage } from "@/utils/authStorage";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-export default function Index({ token }: { token: string | null }) {
+export default function Settings({ token }: { token: string }) {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
@@ -25,7 +25,7 @@ export default function Index({ token }: { token: string | null }) {
   return (
     <View style={{ flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
       <View style={{ width: '100%', flex: 1}}>
-            <ContiCorrenteTable token={accessToken} />
+           <SettingsComponent token={accessToken}/>
         </View>
     </View>
     // <View />
