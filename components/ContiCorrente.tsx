@@ -1,8 +1,11 @@
 import { TransazioniDto } from '@/types/transaction.dto';
+import { MaterialIcons } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { Card, List, Text } from 'react-native-paper';
+import { ActivityIndicator, useWindowDimensions, View } from 'react-native';
+import { Button, Card, DataTable, List, PaperProvider, Text } from 'react-native-paper';
 import { getAllContiCorrente } from '../api/ContiCorrenteService';
+import styles from '../styles/ContiCorrente.style';
+import AddContiCorrenteModal from './modal/AddContiCorrenteModal';
 
 interface ContiCorrente {
   id: number;
@@ -16,6 +19,10 @@ export default function ContiCorrente({ token }: { token: string | null }) {
   const [dati, setDati] = useState<ContiCorrente[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [dataUltimaTransazione, setDataUltimaTransazione] = useState<Record<number, string>>({});
+  const [modalVisible, setModalVisible] = useState(false);
+  const dimensions = useWindowDimensions();
+  const isLargeScreen = dimensions.width >= 768;
 
   useEffect(() => {
     (token);
@@ -35,53 +42,108 @@ export default function ContiCorrente({ token }: { token: string | null }) {
   if (loading) return <ActivityIndicator size="large" color="#0000ff" />;
   if (error) return <Text style={{ color: 'red' }}>Errore: {error}</Text>;
 
-  return (
-    <View style={styles.container}>
-      {dati.map((conto) => (
-        <Card mode='contained'>
-          <Card.Title title={conto.nome}/>
-          <Card.Content>
-            <Text>{conto.totale} €</Text>
-            <List.Section>
-              <List.Subheader>transazioni</List.Subheader>
-              {conto.transazioni.map((t) => (
-                <List.Item title={t.nome}  /> //left={() => <List.Icon icon="folder" />}
-              ))}
-            </List.Section>
-          </Card.Content>
-        </Card>
-      ))}
-    </View>
-  );
+  //let dataUltimaTransazione = '';
 
-  // return (
-  //   <View style={styles.container}>
-  //     <View style={styles.table}>
-  //       <View style={[styles.row, styles.header]}>
-  //         <Text style={styles.cell}>Id</Text>
-  //         <Text style={styles.cell}>Nome</Text>
-  //         <Text style={styles.cell}>Descrizione</Text>
-  //         <Text style={styles.cell}>Totale</Text>
-  //       </View>
-        
-  //       {dati.map((conto) => (
-  //         <View key={conto.id} style={styles.row}>
-  //           <Text style={styles.cell}>{conto.id}</Text>
-  //           <Text style={styles.cell}>{conto.nome}</Text>
-  //           <Text style={styles.cell}>{conto.descrizione}</Text>
-  //           <Text style={styles.cell}>{conto.totale} €</Text>
-  //         </View>
-  //       ))}
-  //     </View>
-  //   </View>
-  // );
+  const mappa: Record<number, string> = {};
+
+  dati.forEach((cc) => {
+    if(cc.transazioni.length === 0) return;
+
+    const ultima = cc.transazioni.reduce((a, b) =>
+      new Date(b.dataTransazione) > new Date(a.dataTransazione) ? b : a
+    );
+
+    let tmp_date = new Date(ultima.dataTransazione).toLocaleDateString('it-IT', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    })
+
+    mappa[cc.id] = tmp_date;
+  });
+
+  const addContoCorrente = () => {
+    setModalVisible(true); // show the modal
+  };
+
+  const closeModal = () => {
+    setModalVisible(false); // hide the modal
+  };
+
+
+  if(isLargeScreen) {
+    return (
+      <PaperProvider>
+        <View style={styles.container}>
+          <View style={styles.button_container}>
+            <Button style={styles.buttonAdd} mode='elevated' onPress={() => setModalVisible(true)}>
+              <Text style={styles.buttonAddText}>Aggiungi conto corrente</Text>
+            </Button>
+
+            {/* Modal posizionato qui, come fratello del PaperProvider */}
+            <AddContiCorrenteModal
+              visible={modalVisible}
+              onDismiss={() => setModalVisible(false)}
+            />
+          </View>
+          <DataTable>
+            <DataTable.Header style={styles.header}>
+              <DataTable.Title sortDirection='ascending'>
+                <Text style={styles.header_text}>Nome</Text>
+              </DataTable.Title>
+              <DataTable.Title style={styles.verticalDivider}>
+                <Text style={styles.header_text}>Totale</Text>
+              </DataTable.Title>
+              <DataTable.Title sortDirection='descending' style={styles.verticalDivider}>
+                <Text style={styles.header_text}>Data ultima tranasazione</Text>
+              </DataTable.Title>
+              <DataTable.Title style={styles.verticalDivider}>
+                <Text style={styles.header_text}>Azioni</Text>
+              </DataTable.Title>
+            </DataTable.Header>
+            {dati.map((conto) => (
+              <DataTable.Row key={conto.id} style={styles.tableRow}>
+                <DataTable.Cell>
+                  <Text style={styles.tableCellText}>{conto.nome}</Text>
+                </DataTable.Cell>
+                <DataTable.Cell style={styles.verticalDivider}>
+                  <Text style={styles.tableCellText}>{conto.totale} €</Text>
+                </DataTable.Cell>
+                <DataTable.Cell style={styles.verticalDivider}>
+                  <Text style={styles.tableCellText}>{mappa[conto.id]}</Text>
+                </DataTable.Cell>
+                <DataTable.Cell style={styles.verticalDivider}>
+                  <Button mode='text' onPress={() => {}} style={styles.actionButton}>
+                    <View style={styles.actionContainer}>
+                      <MaterialIcons name="turn-slight-right" size={20} color="#000000" />
+                      <Text style={styles.tableCellText}>Vai a transazioni</Text>
+                    </View>
+                  </Button>
+                </DataTable.Cell>
+              </DataTable.Row>
+            ))}
+          </DataTable>
+        </View>
+      </PaperProvider>
+    );
+  }else {
+    return (
+      <View style={styles.container}>
+        {dati.map((conto) => (
+          <Card mode='contained'>
+            <Card.Title title={conto.nome}/>
+            <Card.Content>
+              <Text>{conto.totale} €</Text>
+              <List.Section>
+                <List.Subheader>transazioni</List.Subheader>
+                {conto.transazioni.map((t) => (
+                  <List.Item title={t.nome}  /> //left={() => <List.Icon icon="folder" />}
+                ))}
+              </List.Section>
+            </Card.Content>
+          </Card>
+        ))}
+      </View>
+    );
+  }
 }
-
-const styles = StyleSheet.create({
-  container: { padding: 20, width: '50%' },
-  title: { fontSize: 20, fontWeight: 'bold', marginBottom: 15 },
-  table: { borderWidth: 1, borderColor: '#ccc', borderRadius: 5 },
-  row: { flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#eee', padding: 10 },
-  header: { backgroundColor: '#f0f0f0' },
-  cell: { flex: 1, fontSize: 14 }
-});
