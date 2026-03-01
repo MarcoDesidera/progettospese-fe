@@ -10,6 +10,7 @@ import { useRootNavigationState, useRouter, useSegments } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import Index from ".";
+import LoginScreen from "../(auth)/login";
 
 export default function RootLayout() {
 
@@ -67,5 +68,6 @@ export default function RootLayout() {
   return <DrawerMenu 
             ContiCorrenteScreen={() => <Index token={accessToken} />} 
             SettingsScreen={() => <Settings token={accessToken} />}
+            LoginScreen={() => <LoginScreen />}
           />
 }

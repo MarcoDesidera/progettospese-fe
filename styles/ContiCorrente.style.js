@@ -96,11 +96,12 @@ const styles_web = StyleSheet.create({
 
   },
   mobileContainer: {
-    padding: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
-    columnGap: 20,
+    columnGap: 0,
     rowGap: 20,
     justifyContent: 'space-around'
   },

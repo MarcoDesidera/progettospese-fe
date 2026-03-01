@@ -24,12 +24,18 @@ function CustomDrawerContent({ navigation, state }: DrawerContentComponentProps)
         active={state.index === 1}
         onPress={() => {navigation.navigate('settings')}}
       />
+      <PaperDrawer.Item
+        label="Login"
+        icon="cog"
+        active={state.index === 2}
+        onPress={() => {router.replace('/(auth)/login')}}
+      />
     </PaperDrawer.Section>
     </PaperProvider>
   );
 }
 
-export default function DrawerMenu({ContiCorrenteScreen, SettingsScreen} : any) {
+export default function DrawerMenu({ContiCorrenteScreen, SettingsScreen, LoginScreen} : any) {
   const dimensions = useWindowDimensions();
   const isLargeScreen = dimensions.width >= 768; // Tablet o Web
 
@@ -50,6 +56,7 @@ export default function DrawerMenu({ContiCorrenteScreen, SettingsScreen} : any) 
 
         <Drawer.Screen name="index" component={ContiCorrenteScreen} />
         <Drawer.Screen name="settings" component={SettingsScreen} />
+        <Drawer.Screen name="login" component={LoginScreen} />
 
     </Drawer.Navigator>
     );
