@@ -94,6 +94,18 @@ const styles_web = StyleSheet.create({
   },
   actionButton: {
 
+  },
+  mobileContainer: {
+    padding: 20,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    columnGap: 20,
+    rowGap: 20,
+    justifyContent: 'space-around'
+  },
+  cardContainer: {
+    backgroundColor: '#dadada',
   }
 });
 

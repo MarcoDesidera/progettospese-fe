@@ -2,9 +2,10 @@ import { TransazioniDto } from '@/types/transaction.dto';
 import { MaterialIcons } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, useWindowDimensions, View } from 'react-native';
-import { Button, Card, DataTable, List, PaperProvider, Text } from 'react-native-paper';
+import { Button, Card, DataTable, PaperProvider, Text } from 'react-native-paper';
 import { getAllContiCorrente } from '../api/ContiCorrenteService';
 import styles from '../styles/ContiCorrente.style';
+import theme from '../styles/default.theme';
 import AddContiCorrenteModal from './modal/AddContiCorrenteModal';
 
 interface ContiCorrente {
@@ -128,22 +129,23 @@ export default function ContiCorrente({ token }: { token: string | null }) {
     );
   }else {
     return (
-      <View style={styles.container}>
-        {dati.map((conto) => (
-          <Card mode='contained'>
-            <Card.Title title={conto.nome}/>
-            <Card.Content>
-              <Text>{conto.totale} €</Text>
-              <List.Section>
-                <List.Subheader>transazioni</List.Subheader>
-                {conto.transazioni.map((t) => (
-                  <List.Item title={t.nome}  /> //left={() => <List.Icon icon="folder" />}
-                ))}
-              </List.Section>
-            </Card.Content>
-          </Card>
-        ))}
-      </View>
+      <PaperProvider>
+        <View style={styles.mobileContainer}>
+          {dati.map((conto) => (
+            <Card mode='contained' style={styles.cardContainer}>
+              <Card.Title title={conto.nome} theme={theme} titleStyle={{fontFamily: 'PublicSans-Regular', fontSize: 20, color: '#5e5e5e'}}/>
+              <Card.Content>
+                <Text style={[styles.tableCellText, {fontSize: 14}]}>Totale: </Text>
+                <Text style={styles.tableCellText}>{conto.totale} €</Text>
+              </Card.Content>
+              <Card.Content style={{marginTop: 8}}>
+                <Text style={[styles.tableCellText, {fontSize: 14}]}>Data ultima transazione: </Text>
+                <Text style={styles.tableCellText}>{mappa[conto.id]}</Text>
+              </Card.Content>
+            </Card>
+          ))} 
+        </View>
+      </PaperProvider>
     );
   }
 }
