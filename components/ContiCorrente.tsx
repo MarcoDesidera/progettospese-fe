@@ -12,7 +12,7 @@ interface ContiCorrente {
   transazioni: TransazioniDto[];
 }
 
-export default function ContiCorrenteTable({ token }: { token: string | null }) {
+export default function ContiCorrente({ token }: { token: string | null }) {
   const [dati, setDati] = useState<ContiCorrente[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
