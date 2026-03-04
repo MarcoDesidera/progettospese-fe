@@ -85,6 +85,7 @@ export default function ContiCorrente({ token }: { token: string | null }) {
             <AddContiCorrenteModal
               visible={modalVisible}
               onDismiss={() => setModalVisible(false)}
+              token={token}
             />
           </View>
           <DataTable>
