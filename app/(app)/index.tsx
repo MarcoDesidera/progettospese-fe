@@ -1,4 +1,4 @@
-import ContiCorrenteTable from "@/components/ContiCorrenteTable";
+import ContiCorrente from "@/components/ContiCorrente";
 import { authStorage } from "@/utils/authStorage";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -25,7 +25,7 @@ export default function Index({ token }: { token: string | null }) {
   return (
     <View style={{ flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
       <View style={{ width: '100%', flex: 1}}>
-            <ContiCorrenteTable token={accessToken} />
+            <ContiCorrente token={accessToken} />
         </View>
     </View>
     // <View />
