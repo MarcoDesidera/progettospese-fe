@@ -1,10 +1,16 @@
 import DrawerMenu from "@/components/DrawerMenu";
 import Settings from "@/components/SettingsComponent";
 import { authStorage } from "@/utils/authStorage";
+import {
+  PublicSans_400Regular,
+  PublicSans_700Bold,
+  useFonts
+} from '@expo-google-fonts/public-sans';
 import { useRootNavigationState, useRouter, useSegments } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import Index from ".";
+import LoginScreen from "../(auth)/login";
 
 export default function RootLayout() {
 
@@ -13,6 +19,12 @@ export default function RootLayout() {
   const segments = useSegments();
   const navigationState = useRootNavigationState();
   const [isChecking, setIsChecking] = useState(true);
+
+  const [fontsLoaded] = useFonts({
+    // Qui decidi tu il "soprannome" (la chiave)
+    'PublicSans-Regular': PublicSans_400Regular,
+    'PublicSans-Bold': PublicSans_700Bold,
+  });
 
   useEffect(() => {
     const loadToken = async () => {
@@ -56,5 +68,6 @@ export default function RootLayout() {
   return <DrawerMenu 
             ContiCorrenteScreen={() => <Index token={accessToken} />} 
             SettingsScreen={() => <Settings token={accessToken} />}
+            LoginScreen={() => <LoginScreen />}
           />
 }

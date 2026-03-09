@@ -2,14 +2,16 @@ import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navig
 import { router } from 'expo-router';
 import * as React from 'react';
 import { useWindowDimensions } from 'react-native';
-import { Appbar, Drawer as PaperDrawer } from 'react-native-paper';
+import { Appbar, Drawer as PaperDrawer, PaperProvider } from 'react-native-paper';
+import theme from '../styles/default.theme';
 
 const Drawer = createDrawerNavigator();
 
 // Componente personalizzato per il contenuto della Sidebar
 function CustomDrawerContent({ navigation, state }: DrawerContentComponentProps) {
   return (
-    <PaperDrawer.Section title="Menu Principale" style={{ marginTop: 40 }}>
+    <PaperProvider theme={theme}>
+      <PaperDrawer.Section title="Menu Principale" style={{ marginTop: 40 }}>
       <PaperDrawer.Item
         label="Home"
         icon="home"
@@ -22,11 +24,18 @@ function CustomDrawerContent({ navigation, state }: DrawerContentComponentProps)
         active={state.index === 1}
         onPress={() => {navigation.navigate('settings')}}
       />
+      <PaperDrawer.Item
+        label="Login"
+        icon="cog"
+        active={state.index === 2}
+        onPress={() => {router.replace('/(auth)/login')}}
+      />
     </PaperDrawer.Section>
+    </PaperProvider>
   );
 }
 
-export default function DrawerMenu({ContiCorrenteScreen, SettingsScreen} : any) {
+export default function DrawerMenu({ContiCorrenteScreen, SettingsScreen, LoginScreen} : any) {
   const dimensions = useWindowDimensions();
   const isLargeScreen = dimensions.width >= 768; // Tablet o Web
 
@@ -39,18 +48,15 @@ export default function DrawerMenu({ContiCorrenteScreen, SettingsScreen} : any) 
         drawerType: 'front',
         header: () => (
             <Appbar.Header>
-            {/* Mostra l'icona menu solo se non siamo su grande schermo o se vogliamo il toggle */}
-            {/* {!isLargeScreen && (
-                <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
-            )} */}
-            <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
-            <Appbar.Content title="Progetto Spese" />
+              <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
+              <Appbar.Content title="Progetto Spese"/>
             </Appbar.Header>
         ),
         })}> 
 
         <Drawer.Screen name="index" component={ContiCorrenteScreen} />
         <Drawer.Screen name="settings" component={SettingsScreen} />
+        <Drawer.Screen name="login" component={LoginScreen} />
 
     </Drawer.Navigator>
     );

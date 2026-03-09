@@ -91,10 +91,10 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      # - name: Build APK
-      #   run: eas build --platform android --profile preview --non-interactive
-      #   env:
-      #     EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      - name: Build APK
+        run: eas build --platform android --profile preview --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
